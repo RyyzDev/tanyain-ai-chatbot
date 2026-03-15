@@ -1,0 +1,155 @@
+:root {
+  --primary-color: #6366f1;
+  --secondary-color: #a5b4fc;
+  --bg-color: #f8fafc;
+  --text-color: #1e293b;
+  --msg-user-bg: #6366f1;
+  --msg-bot-bg: #ffffff;
+  --accent-color: #f59e0b;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  height: 100vh;
+  overflow: hidden;
+}
+
+.app-layout {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  transition: all 0.5s ease;
+}
+
+.chat-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: white;
+  border-right: 1px solid #e2e8f0;
+  transition: flex 0.5s ease;
+}
+
+.interactive-section {
+  flex: 0;
+  background: #f1f5f9;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transition: flex 0.5s ease;
+  padding: 0;
+}
+
+.interactive-header {
+  padding: 15px 20px;
+  background: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #e2e8f0;
+  display: none; /* Hidden by default */
+}
+
+.interactive-header h2 { font-size: 1rem; color: var(--primary-color); }
+
+.close-btn {
+  background: none; border: none; font-size: 1.5rem; cursor: pointer; color: #64748b;
+}
+
+#interactive-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0;
+}
+
+/* When interactive is active */
+.app-layout.active-interactive .chat-section {
+  flex: 0.4;
+}
+.app-layout.active-interactive .interactive-section {
+  flex: 0.6;
+}
+.app-layout.active-interactive .interactive-header {
+  display: flex;
+}
+.app-layout.active-interactive #interactive-content {
+  padding: 20px;
+}
+
+header { padding: 15px; border-bottom: 1px solid #f1f5f9; }
+.logo { display: flex; align-items: center; gap: 10px; }
+.logo-icon { font-size: 20px; }
+.logo-text h1 { font-size: 1.1rem; color: var(--primary-color); }
+.logo-text p { font-size: 0.7rem; color: #64748b; }
+
+.chat-box {
+  flex: 1;
+  overflow-y: auto;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background: #f8fafc;
+}
+
+.message {
+  max-width: 85%;
+  padding: 10px 14px;
+  border-radius: 12px;
+  font-size: 0.9rem;
+  line-height: 1.4;
+  word-wrap: break-word;
+}
+.message.user { align-self: flex-end; background: var(--msg-user-bg); color: white; }
+.message.bot { align-self: flex-start; background: white; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
+
+.input-area { padding: 15px; background: white; border-top: 1px solid #f1f5f9; }
+#chat-form { display: flex; gap: 8px; }
+input[type="text"] {
+  flex: 1; padding: 10px 15px; border: 1px solid #e2e8f0; border-radius: 10px; font-family: inherit;
+}
+#send-btn { background: var(--primary-color); color: white; border: none; padding: 10px 15px; border-radius: 10px; cursor: pointer; }
+
+/* Interactive Cards */
+.card {
+  background: white;
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+  margin-bottom: 20px;
+  animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateX(20px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+.quiz-q { font-size: 1.1rem; font-weight: 700; margin-bottom: 15px; color: var(--primary-color); }
+.quiz-opts { display: flex; flex-direction: column; gap: 10px; }
+.opt-btn {
+  padding: 12px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; cursor: pointer; text-align: left; font-family: inherit; transition: 0.2s;
+}
+.opt-btn:hover { background: #eff6ff; border-color: var(--secondary-color); }
+.opt-btn.correct { background: #22c55e; color: white; border-color: #16a34a; }
+.opt-btn.wrong { background: #ef4444; color: white; border-color: #dc2626; }
+
+.task-list { list-style: none; }
+.task-item {
+  display: flex; align-items: center; gap: 12px; padding: 12px; border-bottom: 1px solid #f1f5f9; cursor: pointer;
+}
+.task-item:last-child { border-bottom: none; }
+.task-item.completed { opacity: 0.5; text-decoration: line-through; }
+.task-time { font-weight: 700; color: var(--primary-color); font-size: 0.8rem; min-width: 50px; }
+
+.interactive-placeholder {
+  height: 100%; display: flex; align-items: center; justify-content: center; color: #94a3b8; text-align: center; padding: 40px;
+}
+
+.explanation-box {
+  margin-top: 15px; padding: 12px; background: #f0f9ff; border-radius: 8px; font-size: 0.85rem; border-left: 4px solid var(--primary-color);
+}

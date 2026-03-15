@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>tanyAIn - Teman Belajar 24/7</title>
+  <link rel="stylesheet" href="style.css"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="app-layout" id="app-layout">
+    <div class="chat-section">
+      <header>
+        <div class="logo">
+          <div class="logo-text">
+            <h1>tanyAIn</h1>
+            <p>Tanya apa aja, AI yang jawab-jawabin.</p>
+          </div>
+        </div>
+      </header>
+
+      <main id="chat-box" class="chat-box"></main>
+
+      <footer class="input-area">
+        <form id="chat-form">
+          <input type="text" id="user-input" placeholder="Tanya PR atau kuis..." autocomplete="off" required />
+          <button type="submit" id="send-btn">Kirim ⌲</button>
+        </form>
+      </footer>
+    </div>
+
+    <div class="interactive-section" id="interactive-section">
+      <div class="interactive-header">
+        <h2>Konten Interaktif</h2>
+        <button id="close-interactive" class="close-btn">&times;</button>
+      </div>
+      <div id="interactive-content">
+        <div class="interactive-placeholder">
+          <p>Interactive Content (Kuis/Planner) akan muncul di sini ✨</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="script.js?v=4"></script>
+</body>
+</html>
