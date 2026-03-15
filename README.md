@@ -26,8 +26,8 @@ Kelola tugas sekolahmu tanpa ribet:
 ## 🚀 Cara Memulai
 
 ### Prasyarat
-* Node.js / Python (tergantung teknologi yang digunakan)
-* API Key (seperti OpenAI atau Google Gemini)
+* Node.js
+* API Key Gemini
 
 ### Instalasi
 1. Clone repositori ini:
