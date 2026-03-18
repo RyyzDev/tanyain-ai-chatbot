@@ -101,6 +101,14 @@ closeBtn.onclick = () => {
   appLayout.classList.remove('active-interactive');
 };
 
+// Handle Quick Chat Buttons
+document.querySelectorAll('.quick-btn').forEach(btn => {
+  btn.onclick = () => {
+    input.value = btn.getAttribute('data-msg');
+    form.dispatchEvent(new Event('submit'));
+  };
+});
+
 function findJsonBlocks(str) {
   const blocks = [];
   let braceCount = 0;
@@ -128,12 +136,31 @@ function findJsonBlocks(str) {
 function processAndRender(data) {
   if (!data || typeof data !== 'object') return;
 
+  // New Latihan Soal format
+  if (data.questions && Array.isArray(data.questions)) {
+    const title = data.title || "Latihan Soal";
+    const header = document.createElement('div');
+    header.style.textAlign = 'center';
+    header.style.marginBottom = '15px';
+    header.innerHTML = `<h3 style="color: var(--primary-color);">📝 ${title}</h3>`;
+    interactiveContent.appendChild(header);
+    data.questions.forEach(q => renderQuizCard(q));
+    return;
+  }
+
+  // New Todo List format
+  if (data.todo_list && Array.isArray(data.todo_list)) {
+    renderPlannerCard(data);
+    return;
+  }
+
+  // Legacy/Other formats
   if (data.pertanyaan || data.question || data.type === 'quiz') {
     renderQuizCard(data);
     return;
   }
 
-  if (data.tasks || data.daftar_tugas || data.item || data.aktivitas || data.todo_list) {
+  if (data.tasks || data.daftar_tugas || data.item || data.aktivitas) {
     renderPlannerCard(data);
     return;
   }
@@ -208,7 +235,7 @@ function renderPlannerCard(data) {
     tasks = data;
   } else {
     tasks = data.tasks || data.daftar_tugas || data.todo_list || data.daftar_belanja || [];
-    title = data.judul || title;
+    title = data.title || data.judul || data.recipe_name || title;
   }
   
   const card = document.createElement('div');
@@ -219,6 +246,27 @@ function renderPlannerCard(data) {
   list.classList.add('task-list');
   
   tasks.forEach(task => {
+    // Check if it has nested tasks (stage structure)
+    if (typeof task === 'object' && task.tasks && Array.isArray(task.tasks)) {
+      const stageHeader = document.createElement('li');
+      stageHeader.innerHTML = `<strong style="color: #4f46e5; display: block; margin-top: 15px; margin-bottom: 5px; font-size: 0.95rem;">📍 ${task.stage || task.kategori || 'Tahap'}</strong>`;
+      stageHeader.style.listStyle = 'none';
+      list.appendChild(stageHeader);
+      
+      task.tasks.forEach(subTask => {
+        appendTaskItem(list, subTask);
+      });
+    } else {
+      appendTaskItem(list, task);
+    }
+  });
+  
+  card.appendChild(list);
+  interactiveContent.appendChild(card);
+  interactiveContent.scrollTop = interactiveContent.scrollHeight;
+}
+
+function appendTaskItem(list, task) {
     let time, activity, amount = "", note = "";
     
     if (typeof task === 'string') {
@@ -244,11 +292,6 @@ function renderPlannerCard(data) {
     `;
     li.onclick = () => li.classList.toggle('completed');
     list.appendChild(li);
-  });
-  
-  card.appendChild(list);
-  interactiveContent.appendChild(card);
-  interactiveContent.scrollTop = interactiveContent.scrollHeight;
 }
 
 function showExp(parent, text) {
